@@ -29,7 +29,7 @@ jobs:
             os: node:12-slim
             gyp: 7.0.0            
           
-      steps:
+    steps:
       - uses: actions/checkout@v1
       
       - uses: docker/build-push-action@v1
