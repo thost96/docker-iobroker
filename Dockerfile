@@ -29,9 +29,9 @@ RUN npm install node-gyp@${NODE_GYP_VERSION} -g
 # hadolint ignore=DL4006
 RUN apt-get update -qq \
     && curl -sL https://iobroker.net/install.sh | bash - \
+    && iobroker repo set latest \
     && rm -rf /var/lib/apt/lists/*
 
-RUN iobroker repo set latest 
 # hadolint ignore=DL4006
 RUN echo 'iobroker ALL=(ALL) NOPASSWD: ALL' | EDITOR='tee -a' visudo \
     && echo "iobroker:iobroker" | chpasswd \
