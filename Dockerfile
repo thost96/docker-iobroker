@@ -1,9 +1,15 @@
-FROM node:12-slim
+ARG BASEIMAGE=node:12-slim
+# hadolint ignore=DL3006
+FROM ${BASEIMAGE}
 
 LABEL maintainer="info@thorstenreichelt.de"
 
+ARG LOCALES_VERSION="2.31-0ubuntu9" 
+ARG TZDATA_VERSION="2019c-3ubuntu1" 
+ARG NODE_GYP_VERSION="7.0.0"
 ARG DEBIAN_FRONTEND=noninteractive
 
+# hadolint ignore=DL3008
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     curl \
     locales \ 
@@ -19,14 +25,14 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
 
 WORKDIR /
 
-RUN npm install node-gyp@7.0.0 -g
-
+RUN npm install node-gyp@${NODE_GYP_VERSION} -g
+# hadolint ignore=DL4006
 RUN apt-get update -qq \
     && curl -sL https://iobroker.net/install.sh | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 RUN iobroker repo set latest 
-
+# hadolint ignore=DL4006
 RUN echo 'iobroker ALL=(ALL) NOPASSWD: ALL' | EDITOR='tee -a' visudo \
     && echo "iobroker:iobroker" | chpasswd \
     && adduser iobroker sudo
