@@ -36,5 +36,5 @@ This project creates a Docker image for running ioBroker as a Docker Container.
 * (thost96) - removed unused scripts 
 * (thost96) - linked logfile to stdout for docker logs
 
-### 1.0 ()
+### 1.0 (01.02.2020)
 * (thost96) - Initial Edit and Release
