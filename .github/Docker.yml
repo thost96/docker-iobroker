@@ -1,0 +1,68 @@
+name: Docker Image CI
+
+on:
+  push:
+    paths-ignore: 
+      - "README.md"
+    branches:
+    - master
+  schedule:
+    - cron:  "0 0 * * 0"
+  pull_request:
+    paths-ignore: 
+      - "README.md"
+    branches:
+    - master
+      
+
+jobs:
+  
+  build:
+    name: ioBroker on ${{ matrix.version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:        
+        include:
+          - version: node-12
+            tag: node-12,latest
+            os: node:12-slim
+            gyp: 7.0.0            
+          
+      steps:
+      - uses: actions/checkout@v1
+      
+      - uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: "1"
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          add_git_labels: true
+          repository: thost96/iobroker
+          tags: ${{ matrix.tag }}
+          build_args: BASEIMAGE=${{matrix.os}},NODE_GYP_VERSION=${{matrix.gyp}}
+
+  lint:
+    name: Lint Dockerfile
+    runs-on: ubuntu-latest         
+    steps:
+      - uses: actions/checkout@v1
+      - uses: brpaz/hadolint-action@master
+  
+  securitycheck:
+     name: Scan for Vuls 
+     runs-on: ubuntu-latest
+     strategy:
+      fail-fast: false
+      matrix:
+        tags: [latest, node-12]
+     steps:
+        - name: Login to DockerHub Registry
+          run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        - name: Pull docker image
+          run: docker pull ${{secrets.DOCKER_USERNAME }}/iobroker:${{ matrix.tags }}
+        - name: Trivy Action
+          uses: homoluctus/gitrivy@v2  
+          with:
+            image: ${{secrets.DOCKER_USERNAME }}/iobroker:${{ matrix.tags }}
