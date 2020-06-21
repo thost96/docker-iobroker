@@ -16,6 +16,7 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     tzdata \ 
     net-tools \
     ca-certificates \
+    sudo \
     && sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen \
     && \dpkg-reconfigure --frontend=noninteractive locales \
     && \update-locale LANG=de_DE.UTF-8 \
