@@ -66,3 +66,4 @@ jobs:
           uses: homoluctus/gitrivy@v2  
           with:
             image: ${{secrets.DOCKER_USERNAME }}/iobroker:${{ matrix.tags }}
+            token: ${{ secrets.GITHUB_TOKEN }}
