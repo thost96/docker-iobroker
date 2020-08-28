@@ -1,13 +1,13 @@
 # docker-iobroker
 Docker image for ioBroker (http://iobroker.net) based on node:12-slim.
 
-This project creates a Docker image for running ioBroker as a Docker Container. 
+This project creates a Docker image for running ioBroker as a Docker Container.
 
 ## Docker RUN
 
 
 
-## Docker-Compose 
+## Docker-Compose
 
 
 
@@ -20,11 +20,11 @@ This project creates a Docker image for running ioBroker as a Docker Container.
 * (thost96) - improved Dockerfile for github actions
 
 ### 1.4 (15.06.2020)
-* (thost96) - fixed installer version and dependencies 
+* (thost96) - fixed installer version and dependencies
 * (thost96) - added healthcheck using admin.0 adapter
 
 ### 1.3 (13.03.2020)
-* (thost96) - Removed iobroker_startup.sh and iobroker_backup.sh from scripts 
+* (thost96) - Removed iobroker_startup.sh and iobroker_backup.sh from scripts
 * (thost96) - removed logfile from iobroker_restart.sh
 
 ### 1.2 (21.02.2020)
@@ -32,8 +32,8 @@ This project creates a Docker image for running ioBroker as a Docker Container.
 * (thost96) - added more scripts into image and merged startup script into Dockerfile
 
 ### 1.1 (02.02.2020)
-* (thost96) - Modified startup scripts 
-* (thost96) - removed unused scripts 
+* (thost96) - Modified startup scripts
+* (thost96) - removed unused scripts
 * (thost96) - linked logfile to stdout for docker logs
 
 ### 1.0 (01.02.2020)
