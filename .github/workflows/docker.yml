@@ -53,39 +53,3 @@ jobs:
           repository: thost96/iobroker
           tags: ${{ matrix.tag }}
           build_args: BASEIMAGE=${{matrix.os}},NODE_GYP_VERSION=${{matrix.gyp}}
-  
-  securitycheck:
-     name: Trivy - Scan for Vuls 
-     runs-on: ubuntu-latest
-     needs: build
-     strategy:
-      fail-fast: false
-      matrix:
-        tags: [latest, node-12]
-     steps:
-        - name: Login to DockerHub Registry
-          run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        - name: Pull docker image
-          run: docker pull ${{secrets.DOCKER_USERNAME }}/iobroker:${{ matrix.tags }}
-        - name: Trivy Action
-          uses: homoluctus/gitrivy@v2  
-          with:
-            image: ${{secrets.DOCKER_USERNAME }}/iobroker:${{ matrix.tags }}
-            token: ${{ secrets.GITHUB_TOKEN }}
-  
-  security:
-    name: Snyk - Security Check
-    runs-on: ubuntu-latest
-    needs: build
-    strategy:
-      fail-fast: false
-      matrix:        
-        tag: [ latest, node-12 ]
-    steps:
-    - uses: actions/checkout@master
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/docker@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        image: ${{secrets.DOCKER_USERNAME }}/iobroker:${{matrix.tag}}
