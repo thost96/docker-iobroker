@@ -1,5 +1,5 @@
 # docker-iobroker
-Docker image for ioBroker (http://iobroker.net) based on node:12-slim.
+Docker image for ioBroker ("http://iobroker.net") based on node-slim.
 
 This project creates a Docker image for running ioBroker as a Docker Container.
 
@@ -18,6 +18,7 @@ This project creates a Docker image for running ioBroker as a Docker Container.
 
 ### 1.5.1 (pending)
 * (thost96) - removed security checks from Docker Image CI Action into own Security Check Action
+* (thost96) - fixed linter and github actions
 
 ### 1.5.0 (21.06.2020)
 * (thost96) - changed changelog to global version
