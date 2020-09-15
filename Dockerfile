@@ -28,7 +28,7 @@ WORKDIR /
 RUN npm install node-gyp@${NODE_GYP_VERSION} -g
 # hadolint ignore=DL4006
 RUN apt-get update -qq \
-    && curl -sL https://iobroker.net/install.sh | bash - \
+    && curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/ebe41b9/installer.sh | bash - \
     && iobroker repo set latest \
     && rm -rf /var/lib/apt/lists/*
 
